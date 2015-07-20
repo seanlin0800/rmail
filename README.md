@@ -22,3 +22,7 @@ Issue this command to start webpack-dev-server, which will perform live reloadin
 npm run dev
 ```
 Go to http://localhost:8080/index.html and whenever you do a file change the browser will refresh.
+
+If you would like to perform linting, just hit `npm run lint`.
+ - Linter: eslint
+ - Rules: adapted from [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
