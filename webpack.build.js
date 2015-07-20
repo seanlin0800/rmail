@@ -6,6 +6,10 @@ var common = require('./webpack-common');
 
 module.exports = merge(common, {
 
+  output: {
+    publicPath: '/build/'
+  },
+
   module: {
     loaders: [
       {
