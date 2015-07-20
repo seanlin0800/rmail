@@ -1,0 +1,108 @@
+html,
+body,
+.main,
+#app {
+    height: 100%;
+}
+
+body {
+    padding-top: 70px;
+}
+
+.sidebar,
+.mailbox {
+    margin-top: 25px;
+}
+
+.mailbox-list {
+    margin-top: 5px;
+}
+
+.mailbox-list li:hover {
+    cursor: pointer;
+}
+
+.none-selected {
+    margin: 20px;
+    padding: 20px;
+    font-size: 1.2em;
+}
+
+tr.mail-item:hover {
+    cursor: pointer;
+}
+
+td.bg {
+    width: 1px;
+}
+
+td.widget {
+    width: 20px;
+}
+
+tr.mail-item:hover td.bg {
+    background: url("../imgs/grippy_large.png") no-repeat 1px 50%!important;
+}
+
+td.from {
+    width: 20em;
+}
+
+span.unread {
+    font-weight: bold;
+}
+
+span.read {
+    font-weight: normal;
+}
+
+.new-message {
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+}
+
+.box {
+    margin-left: 15px;
+    display: inline-block;
+}
+
+.context-menu {
+    position: fixed;
+}
+
+div.to {
+    color: #999;
+}
+
+div.body {
+    margin-top: 10px;
+}
+
+div.star {
+    width: 19px;
+    margin: auto 1px;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+}
+
+div.star:hover {
+    cursor: pointer;
+}
+
+div.star-normal {
+    background-image: url("../imgs/star.png");
+}
+
+div.star-normal:hover {
+    background-image: url("../imgs/star-hover.png");
+}
+
+div.star-lit {
+    background-image: url("../imgs/star-lit.png");
+}
+
+div.star-lit:hover {
+    background-image: url("../imgs/star-lit-hover.png");
+}
