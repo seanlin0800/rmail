@@ -24,7 +24,7 @@ var Email = React.createClass({
 
   componentDidMount: function() {
     this.listenTo(EmailStore, this._onChange);
-    document.title = this.state.mail.subject;
+    this._updateTitle();
     this._markRead();
   },
 
@@ -35,7 +35,7 @@ var Email = React.createClass({
   },
 
   componentDidUpdate: function() {
-    document.title = this.state.mail.subject;
+    this._updateTitle();
     this._markRead();
   },
 
@@ -49,8 +49,15 @@ var Email = React.createClass({
     };
   },
 
+  _updateTitle: function() {
+    if (!this.state.mail) {
+      return;
+    }
+    document.title = this.state.mail.subject;
+  },
+
   _markRead: function() {
-    if (this.state.mail.isRead) {
+    if (!this.state.mail || this.state.mail.isRead) {
       return;
     }
     MailThreadActionCreators.markThread(
@@ -69,6 +76,11 @@ var Email = React.createClass({
 
   render: function() {
     var mail = this.state.mail;
+
+    if (!mail) {
+      return null;
+    }
+
     return (
       <div>
         <h2>{mail.subject}</h2>
