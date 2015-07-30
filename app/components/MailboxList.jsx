@@ -32,7 +32,7 @@ var MailboxList = React.createClass({
         <MailboxTab
           key={this.state.mailboxes[name].id}
           name={name}
-          count={this.state.mailboxes[name].count} />
+          unreadCount={this.state.mailboxes[name].unreadCount} />
       );
     }.bind(this));
 

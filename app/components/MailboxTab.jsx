@@ -8,7 +8,7 @@ var MailboxTab = React.createClass({
 
   propTypes: {
     name: React.PropTypes.string,
-    count: React.PropTypes.number
+    unreadCount: React.PropTypes.number
   },
 
   mixins: [Router.State, Router.Navigation],
@@ -26,7 +26,7 @@ var MailboxTab = React.createClass({
     return (
       <li className={classes} onClick={this._handleClick}>
         <span className="badge">
-          {this.props.count}
+          {this.props.unreadCount}
         </span>
         {MailUtils.formatBoxName(this.props.name)}
       </li>
