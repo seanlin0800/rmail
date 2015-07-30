@@ -58,16 +58,18 @@ BoxStore.prototype._convert = function(box) {
   return {
     id: box.id,
     emails: box.emails,
-    count: this._getUnreadNum(box.emails)
+    unreadCount: this._getUnreadCount(box.emails)
   };
 };
 
 BoxStore.prototype._updateCount = function(name) {
   this.waitFor([EmailStore.dispatchToken]);
-  this.boxData[name].count = this._getUnreadNum(this.boxData[name].emails);
+  this.boxData[name].unreadCount = this._getUnreadCount(
+    this.boxData[name].emails
+  );
 };
 
-BoxStore.prototype._getUnreadNum = function(emails) {
+BoxStore.prototype._getUnreadCount = function(emails) {
   return Object.keys(emails).reduce(function(count, id) {
     return !emails[id].isRead ? count + 1 : count;
   }, 0);
