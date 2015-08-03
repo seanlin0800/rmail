@@ -4,7 +4,6 @@ var ListenerMixin = require('alt/mixins/ListenerMixin');
 
 var Site = require('../constants/Site');
 var EmailStore = require('../stores/EmailStore');
-var BoxStore = require('../stores/BoxStore');
 var MailUtils = require('../utils/MailUtils');
 var EmailList = require('./EmailList');
 
@@ -34,7 +33,7 @@ var Mailbox = React.createClass({
   },
 
   _getStateFromStores: function(boxName) {
-    var box = BoxStore.get(boxName);
+    var box = EmailStore.getBox(boxName);
     return {emails: box.emails};
   },
 

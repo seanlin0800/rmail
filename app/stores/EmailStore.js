@@ -15,6 +15,10 @@ function EmailStore() {
       return this.getState().mailData;
     },
 
+    getBox: function(name) {
+      return this.getState().mailData[name];
+    },
+
     get: function(name, id) {
       return this.getState().mailData[name].emails[parseInt(id, 10)];
     }

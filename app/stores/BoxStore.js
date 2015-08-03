@@ -57,15 +57,17 @@ BoxStore.prototype.onSendMailSuccess = function() {
 BoxStore.prototype._convert = function(box) {
   return {
     id: box.id,
-    emails: box.emails,
     unreadCount: this._getUnreadCount(box.emails)
   };
 };
 
 BoxStore.prototype._updateCount = function(name) {
+  var box;
+
   this.waitFor([EmailStore.dispatchToken]);
+  box = EmailStore.getBox(name);
   this.boxData[name].unreadCount = this._getUnreadCount(
-    this.boxData[name].emails
+    box.emails
   );
 };
 
