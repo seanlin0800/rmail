@@ -17,9 +17,6 @@ function MsgBoxStore() {
 }
 
 MsgBoxStore.prototype.onAddNewMsgBox = function() {
-  if (Object.keys(this.newMsgBoxes).length >= 2) {
-    return;
-  }
   this.newMsgBoxes[this.newMsgBoxId++] = 1;
 };
 
