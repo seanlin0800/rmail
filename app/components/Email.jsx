@@ -1,6 +1,7 @@
 var React = require('react');
 var Router = require('react-router');
 var ListenerMixin = require('alt/mixins/ListenerMixin');
+var DocumentTitle = require('react-document-title');
 
 var Site = require('../constants/Site');
 var MailUtils = require('../utils/MailUtils');
@@ -24,7 +25,6 @@ var Email = React.createClass({
 
   componentDidMount: function() {
     this.listenTo(EmailStore, this._onChange);
-    this._updateTitle();
     this._markRead();
   },
 
@@ -35,25 +35,13 @@ var Email = React.createClass({
   },
 
   componentDidUpdate: function() {
-    this._updateTitle();
     this._markRead();
-  },
-
-  componentWillUnmount: function() {
-    document.title = Site.TITLE;
   },
 
   _getStateFromStores: function(name, id) {
     return {
       mail: EmailStore.get(name, id)
     };
-  },
-
-  _updateTitle: function() {
-    if (!this.state.mail) {
-      return;
-    }
-    document.title = this.state.mail.subject;
   },
 
   _markRead: function() {
@@ -82,26 +70,28 @@ var Email = React.createClass({
     }
 
     return (
-      <div>
-        <h2>{mail.subject}</h2>
-        <div className="email">
-          <div className="row">
-            <div className="col-md-10">
-              {mail.from}
+      <DocumentTitle title={this.state.mail.subject}>
+        <div>
+          <h2>{mail.subject}</h2>
+          <div className="email">
+            <div className="row">
+              <div className="col-md-10">
+                {mail.from}
+              </div>
+              <div className="col-md-2">
+                <StarWidget
+                  mail={this.state.mail}
+                  boxName={this.getParams().name} />
+                {MailUtils.formatDate(mail.date)}
+              </div>
             </div>
-            <div className="col-md-2">
-              <StarWidget
-                mail={this.state.mail}
-                boxName={this.getParams().name} />
-              {MailUtils.formatDate(mail.date)}
-            </div>
+            <div className="to">to {mail.to}</div>
           </div>
-          <div className="to">to {mail.to}</div>
+          <div
+            className="body"
+            dangerouslySetInnerHTML={{__html: mail.body}} />
         </div>
-        <div
-          className="body"
-          dangerouslySetInnerHTML={{__html: mail.body}} />
-      </div>
+      </DocumentTitle>
     );
   }
 
