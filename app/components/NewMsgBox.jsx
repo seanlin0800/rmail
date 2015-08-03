@@ -16,6 +16,18 @@ var NewMsgBox = React.createClass({
     this.listenTo(MsgBoxStore, this._onChange);
   },
 
+  _renderBoxList: function() {
+    var boxList = this.state.boxKeyList;
+    var threshold = boxList.length - 2;
+
+    // Only shows last 2 msg boxes
+    return boxList.map(function(key, index) {
+      return (
+        <Model key={key} id={key} isHidden={index < threshold} />
+      );
+    });
+  },
+
   _getStateFromStores: function() {
     return {
       boxKeyList: MsgBoxStore.getNewMsgKeys()
@@ -27,15 +39,9 @@ var NewMsgBox = React.createClass({
   },
 
   render: function() {
-    var boxList = this.state.boxKeyList.map(function(key) {
-      return (
-        <Model key={key} id={key}/>
-      );
-    });
-
     return (
       <div className="new-message">
-        {boxList}
+        {this._renderBoxList()}
       </div>
     );
   }

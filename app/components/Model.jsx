@@ -1,4 +1,5 @@
 var React = require('react');
+var classNames = require('classnames');
 
 var MailActionCreators = require('../actions/MailActionCreators');
 var NewMsgForm = require('./NewMsgForm');
@@ -8,7 +9,8 @@ var INI_MSG_TITLE = 'New Message';
 var Model = React.createClass({
 
   propTypes: {
-    id: React.PropTypes.number
+    id: React.PropTypes.number,
+    isHidden: React.PropTypes.boolean
   },
 
   getInitialState: function() {
@@ -29,8 +31,13 @@ var Model = React.createClass({
   },
 
   render: function() {
+    var classes = classNames({
+      'modal-dialog': true,
+      'box': true,
+      'hidden': this.props.isHidden
+    });
     return (
-      <div className="modal-dialog box">
+      <div className={classes}>
         <div className="modal-content">
           <div className="modal-header">
             <button
