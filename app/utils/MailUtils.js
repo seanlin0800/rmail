@@ -14,12 +14,13 @@ module.exports = {
 
   formatDate: function(dateString) {
     var date = moment(dateString);
+    var now = moment();
 
-    if (date.get('day') == moment().get('day')) {
+    if (now.isSame(date, 'day')) {
       return date.format('h:mm a');
     }
 
-    if (date.get('year') === moment().get('year')) {
+    if (now.isSame(date, 'year')) {
       return date.format('MMM DD');
     }
 
