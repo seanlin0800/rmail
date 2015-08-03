@@ -10,7 +10,7 @@ module.exports = {
     app: path.resolve(ROOT_PATH, 'app/app.js'),
     vendors: ['react', 'react-router', 'alt',
               'classnames', 'moment', 'object-assign',
-              'react-notification-system']
+              'react-notification-system', 'react-document-title']
   },
 
   resolve: {

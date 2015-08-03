@@ -1,4 +1,5 @@
 var React = require('react');
+var DocumentTitle = require('react-document-title');
 
 var ContextMenuActionCreators = require('../actions/ContextMenuActionCreators');
 var ContextMenuStore = require('../stores/ContextMenuStore');
@@ -6,6 +7,7 @@ var NewMsgBox = require('./NewMsgBox');
 var NotificationBox = require('./NotificationBox');
 var Sidebar = require('./Sidebar');
 var Section = require('./Section');
+var Site = require('../constants/Site');
 
 var Main = React.createClass({
 
@@ -19,16 +21,18 @@ var Main = React.createClass({
 
   render: function() {
     return (
-      <div className="main" onClick={this._handleClick}>
-        <div className="container">
-          <div className="row">
-            <Sidebar />
-            <Section />
+      <DocumentTitle title={Site.TITLE}>
+        <div className="main" onClick={this._handleClick}>
+          <div className="container">
+            <div className="row">
+              <Sidebar />
+              <Section />
+            </div>
           </div>
+          <NewMsgBox />
+          <NotificationBox />
         </div>
-        <NewMsgBox />
-        <NotificationBox />
-      </div>
+      </DocumentTitle>
     );
   }
 

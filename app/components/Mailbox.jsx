@@ -1,6 +1,7 @@
 var React = require('react');
 var Router = require('react-router');
 var ListenerMixin = require('alt/mixins/ListenerMixin');
+var DocumentTitle = require('react-document-title');
 
 var Site = require('../constants/Site');
 var EmailStore = require('../stores/EmailStore');
@@ -16,20 +17,11 @@ var Mailbox = React.createClass({
   },
 
   componentDidMount: function() {
-    document.title = MailUtils.formatBoxName(this.getParams().name);
     this.listenTo(EmailStore, this._onChange);
   },
 
   componentWillReceiveProps: function(nextProps) {
     this.setState(this._getStateFromStores(nextProps.params.name));
-  },
-
-  componentDidUpdate: function() {
-    document.title = MailUtils.formatBoxName(this.getParams().name);
-  },
-
-  componentWillUnmount: function() {
-    document.title = Site.TITLE;
   },
 
   _getStateFromStores: function(boxName) {
@@ -42,12 +34,16 @@ var Mailbox = React.createClass({
   },
 
   render: function() {
+    var boxName = this.getParams().name;
+
     return (
-      <div>
-        <EmailList
-          emails={this.state.emails}
-          boxName={this.getParams().name} />
-      </div>
+      <DocumentTitle title={MailUtils.formatBoxName(boxName)}>
+        <div>
+          <EmailList
+            emails={this.state.emails}
+            boxName={this.getParams().name} />
+        </div>
+      </DocumentTitle>
     );
   }
 
