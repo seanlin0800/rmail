@@ -14,11 +14,15 @@ module.exports = {
 
   formatDate: function(dateString) {
     var date = moment(dateString);
-    var thisYear = moment().get('year');
 
-    if (date.get('year') === thisYear) {
+    if (date.get('day') == moment().get('day')) {
+      return date.format('h:mm a');
+    }
+
+    if (date.get('year') === moment().get('year')) {
       return date.format('MMM DD');
     }
+
     return date.format('YYYY/MM/DD');
   }
 

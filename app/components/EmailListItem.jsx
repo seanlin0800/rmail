@@ -65,7 +65,9 @@ var EmailListItem = React.createClass({
           {this.props.mail.body.substring(0, 50)}
         </td>
         <td>
-          {MailUtils.formatDate(this.props.mail.date)}
+          <span className={textClasses}>
+            {MailUtils.formatDate(this.props.mail.date)}
+          </span>
         </td>
       </tr>
     );
