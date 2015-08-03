@@ -47,6 +47,7 @@ describe('BoxStore', function() {
       };
 
       EmailStore.getAll.mockReturnValue(data);
+      EmailStore.getBox.mockReturnValue(data.sent);
       alt.dispatcher.dispatch({
         action: ServerActionCreators.RECEIVE_ALL,
         data: []
@@ -57,7 +58,6 @@ describe('BoxStore', function() {
       var all = BoxStore.getAll();
 
       expect(Object.keys(all).length).toBe(1);
-      expect(Object.keys(all.sent.emails).length).toBe(1);
       expect(all.sent.unreadCount).toBe(1);
     });
 
