@@ -10,7 +10,7 @@ var Model = React.createClass({
 
   propTypes: {
     id: React.PropTypes.number,
-    isHidden: React.PropTypes.boolean
+    isHidden: React.PropTypes.bool
   },
 
   getInitialState: function() {
