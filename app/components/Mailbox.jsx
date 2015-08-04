@@ -3,7 +3,6 @@ var Router = require('react-router');
 var ListenerMixin = require('alt/mixins/ListenerMixin');
 var DocumentTitle = require('react-document-title');
 
-var Site = require('../constants/Site');
 var EmailStore = require('../stores/EmailStore');
 var MailUtils = require('../utils/MailUtils');
 var EmailList = require('./EmailList');
