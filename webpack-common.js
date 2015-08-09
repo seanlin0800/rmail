@@ -4,13 +4,24 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var ROOT_PATH = path.resolve(__dirname);
 
+var _vendors = [
+  'react',
+  'react-router',
+  'alt',
+  'classnames',
+  'moment',
+  'object-assign',
+  'react-notification-system',
+  'react-document-title',
+  'nprogress',
+  'react-bootstrap'
+];
+
 module.exports = {
 
   entry: {
     app: path.resolve(ROOT_PATH, 'app/app.js'),
-    vendors: ['react', 'react-router', 'alt',
-              'classnames', 'moment', 'object-assign',
-              'react-notification-system', 'react-document-title']
+    vendors: _vendors
   },
 
   resolve: {
