@@ -6,6 +6,7 @@
 var assign = require('object-assign');
 
 var ServerActionCreators = require('../actions/ServerActionCreators');
+var router = require('../router');
 
 //
 // Simulate database operations
@@ -45,6 +46,29 @@ function insertNewMail(obj) {
   saveDataToDB(data);
 
   return id;
+}
+
+function createToken(user) {
+  var token = Math.random().toString(36).substring(7);
+  var obj = {};
+  obj[user] = token;
+  sessionStorage.setItem('server_user', JSON.stringify(obj));
+
+  return token;
+}
+
+function isValidToken(obj) {
+  var data = JSON.parse(sessionStorage.getItem('server_user'));
+  if (data && data[obj.user] === obj.token) {
+    return true;
+  }
+  return false;
+}
+
+function deleteToken(userName) {
+  var data = JSON.parse(sessionStorage.getItem('server_user'));
+  delete data[userName];
+  sessionStorage.setItem('server_user', JSON.stringify(data));
 }
 
 module.exports = {
@@ -91,13 +115,54 @@ module.exports = {
     }
   },
 
+  auth: function(obj) {
+    ServerActionCreators.auth();
+    // valid user
+    if (obj && isValidToken(obj)) {
+      setTimeout(function() {
+        ServerActionCreators.authSuccess(obj);
+      }, 500);
+      return;
+    }
+
+    // invalid user
+    setTimeout(function() {
+      ServerActionCreators.authError(obj);
+    }, 500);
+  },
+
   sendMail: function(obj) {
     obj.id = insertNewMail(assign({}, obj));
 
     // simulate success callback
     setTimeout(function() {
       ServerActionCreators.sendMailSuccess(obj);
-    }, 0);
+    }, 500);
+  },
+
+  login: function(obj) {
+    var token;
+    if (obj.email === 'seanlin0800@rmail.com' &&
+        obj.password === 'pass') {
+      token = createToken(obj.email);
+      setTimeout(function() {
+        ServerActionCreators.loginSuccess({
+          name: 'seanlin0800@rmail.com',
+          token: token
+        });
+      }, 500);
+    } else {
+      setTimeout(function() {
+        ServerActionCreators.loginError();
+      }, 500);
+    }
+  },
+
+  logout: function(userName) {
+    deleteToken(userName);
+    setTimeout(function() {
+      router.transitionTo('login');
+    }, 500);
   }
 
 };

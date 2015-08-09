@@ -9,7 +9,7 @@ var INI_MSG_TITLE = 'New Message';
 var Model = React.createClass({
 
   propTypes: {
-    id: React.PropTypes.number,
+    id: React.PropTypes.string,
     isHidden: React.PropTypes.bool
   },
 

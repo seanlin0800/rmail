@@ -25,6 +25,11 @@ module.exports = {
     }
 
     return date.format('YYYY/MM/DD');
+  },
+
+  getUserName: function() {
+    var user = JSON.parse(sessionStorage.getItem('user'));
+    return user.name;
   }
 
 };

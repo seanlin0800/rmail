@@ -24,9 +24,7 @@ var NotificationBox = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <NotificationSystem ref="notificationSystem" />
-      </div>
+      <NotificationSystem ref="notificationSystem" />
     );
   }
 

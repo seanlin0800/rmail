@@ -1,5 +1,4 @@
 var React = require('react');
-var DocumentTitle = require('react-document-title');
 
 var ContextMenuActionCreators = require('../actions/ContextMenuActionCreators');
 var ContextMenuStore = require('../stores/ContextMenuStore');
@@ -7,9 +6,20 @@ var NewMsgBox = require('./NewMsgBox');
 var NotificationBox = require('./NotificationBox');
 var Sidebar = require('./Sidebar');
 var Section = require('./Section');
-var Site = require('../constants/Site');
+var Header = require('./Header');
+var UserStore = require('../stores/UserStore');
 
 var Main = React.createClass({
+
+  statics: {
+    willTransitionTo: function(transition) {
+      if (!UserStore.isLoggedIn()) {
+        transition.redirect('/login', {}, {
+          nextPath: transition.path
+        });
+      }
+    }
+  },
 
   _handleClick: function() {
     // Context menu should be hidden when the user clicks
@@ -21,18 +31,17 @@ var Main = React.createClass({
 
   render: function() {
     return (
-      <DocumentTitle title={Site.TITLE}>
-        <div className="main" onClick={this._handleClick}>
-          <div className="container">
-            <div className="row">
-              <Sidebar />
-              <Section />
-            </div>
+      <div className="main" onClick={this._handleClick}>
+        <Header />
+        <div className="container">
+          <div className="row">
+            <Sidebar />
+            <Section />
           </div>
-          <NewMsgBox />
-          <NotificationBox />
         </div>
-      </DocumentTitle>
+        <NewMsgBox />
+        <NotificationBox />
+      </div>
     );
   }
 
