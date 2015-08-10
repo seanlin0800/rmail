@@ -21,10 +21,6 @@ var App = React.createClass({
   },
 
   _onChange: function() {
-    if (AuthStore.getStatus().isWaiting) {
-      return;
-    }
-
     this.setState({isLoading: false});
   },
 

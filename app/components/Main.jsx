@@ -7,13 +7,13 @@ var NotificationBox = require('./NotificationBox');
 var Sidebar = require('./Sidebar');
 var Section = require('./Section');
 var Header = require('./Header');
-var UserStore = require('../stores/UserStore');
+var MailUtils = require('../utils/MailUtils');
 
 var Main = React.createClass({
 
   statics: {
     willTransitionTo: function(transition) {
-      if (!UserStore.isLoggedIn()) {
+      if (!MailUtils.isAuth()) {
         transition.redirect('/login', {}, {
           nextPath: transition.path
         });
