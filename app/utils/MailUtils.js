@@ -30,6 +30,10 @@ module.exports = {
   getUserName: function() {
     var user = JSON.parse(sessionStorage.getItem('user'));
     return user.name;
+  },
+
+  isAuth: function() {
+    return !!sessionStorage.getItem('user');
   }
 
 };

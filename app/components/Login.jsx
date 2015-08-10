@@ -5,6 +5,7 @@ var ListenerMixin = require('alt/mixins/ListenerMixin');
 var UserActionCreators = require('../actions/UserActionCreators');
 var UserStore = require('../stores/UserStore');
 var Site = require('../constants/Site');
+var MailUtils = require('../utils/MailUtils');
 
 var Login = React.createClass({
 
@@ -12,7 +13,7 @@ var Login = React.createClass({
 
   statics: {
     willTransitionTo: function(transition) {
-      if (UserStore.isLoggedIn()) {
+      if (MailUtils.isAuth()) {
         transition.redirect('main', {});
       }
     }
@@ -29,12 +30,7 @@ var Login = React.createClass({
   _onChange: function() {
     var nextPath = this.getQuery().nextPath;
 
-    if (UserStore.isWaiting()) {
-      return;
-    }
-
-    // login process is done
-    if (UserStore.isAuth()) {
+    if (UserStore.isLoggedIn()) {
       if (nextPath) {
         this.replaceWith(nextPath);
       } else {
