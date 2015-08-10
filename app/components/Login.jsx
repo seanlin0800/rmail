@@ -74,7 +74,7 @@ var Login = React.createClass({
         <label htmlFor="inputPassword" className="sr-only">Password</label>
         <input type="password" ref="password" className="form-control" placeholder="Password" />
         <button className="btn btn-primary btn-block" type="submit">Sign in</button>
-        <p>Hint: email: seanlin0800@rmail.com password: pass</p>
+        <p className="text-center">(email: seanlin0800@rmail.com password: pass)</p>
         {this._renderErrorMsg()}
       </form>
     );
