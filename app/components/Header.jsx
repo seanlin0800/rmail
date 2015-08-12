@@ -16,7 +16,6 @@ var Header = React.createClass({
     UserActionCreators.logout(MailUtils.getUserName());
   },
 
-
   render: function() {
     return (
       <Navbar brand={<a href="#">{Site.TITLE}</a>} toggleNavKey={0} fixedTop={true}>
