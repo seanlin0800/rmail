@@ -1,7 +1,8 @@
+/* eslint-disable block-scoped-var */
+
 jest.dontMock('../EmailStore');
 
 describe('EmailStore', function() {
-
   var EmailStore;
   var ServerActionCreators;
 
@@ -90,5 +91,4 @@ describe('EmailStore', function() {
       expect(Object.keys(EmailStore.getAll().sent.emails).length).toBe(2);
     });
   });
-
 });

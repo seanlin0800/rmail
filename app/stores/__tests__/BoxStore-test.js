@@ -1,7 +1,8 @@
+/* eslint-disable block-scoped-var */
+
 jest.dontMock('../BoxStore');
 
 describe('BoxStore', function() {
-
   var alt;
   var BoxStore;
   var EmailStore;
@@ -111,5 +112,4 @@ describe('BoxStore', function() {
       expect(BoxStore.get('sent').unreadCount).toBe(2);
     });
   });
-
 });
