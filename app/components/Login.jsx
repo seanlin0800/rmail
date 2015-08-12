@@ -28,14 +28,10 @@ var Login = React.createClass({
   },
 
   _onChange: function() {
-    var nextPath = this.getQuery().nextPath;
+    var nextPath = this.getQuery().nextPath || 'main';
 
     if (UserStore.isLoggedIn()) {
-      if (nextPath) {
-        this.replaceWith(nextPath);
-      } else {
-        this.replaceWith('main');
-      }
+      this.replaceWith(nextPath);
     } else {
       this.setState({error: true});
     }
