@@ -9,20 +9,20 @@
   },
   "rules": {
 /**
- * ES6
+ * ES6 (disabled)
  */
-    'no-var': 0,                     // http://eslint.org/docs/rules/no-var
-    'prefer-const': 0,               // http://eslint.org/docs/rules/prefer-const
+    "no-var": 0,                     // http://eslint.org/docs/rules/no-var
+    "prefer-const": 0,               // http://eslint.org/docs/rules/prefer-const
 
 /**
  * Possible errors
  */
- "comma-dangle": [2, "never"],    // http://eslint.org/docs/rules/comma-dangle
+    "comma-dangle": [2, "never"],    // http://eslint.org/docs/rules/comma-dangle
 
 /**
  * Style
  */
-    'func-names': 0,                 // http://eslint.org/docs/rules/func-names
+    "func-names": 0,                 // http://eslint.org/docs/rules/func-names
 
 /**
  * JSX style
