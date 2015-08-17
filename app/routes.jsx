@@ -9,7 +9,7 @@ var Main = require('./components/Main');
 var Mailbox = require('./components/Mailbox');
 var Email = require('./components/Email');
 var NoneSelected = require('./components/NoneSelected');
-// <Redirect from="/" to="main" />
+
 var routes = (
   <Route name="app" path="/" handler={App}>
     <Route name="login" path="/login" handler={Login} />
