@@ -18,7 +18,7 @@ var MailboxList = React.createClass({
 
   _getStateFromStores: function() {
     return {
-      mailboxes: BoxStore.getAll(),
+      mailboxes: BoxStore.getAll()
     };
   },
 
