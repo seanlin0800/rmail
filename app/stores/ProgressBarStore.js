@@ -8,7 +8,7 @@ function ProgressBarStore() {
   this.bindListeners({
     startLoading: [
       MailAction.SEND_MAIL,
-      UserAction.LOGIN,
+      UserAction.LOGIN
     ],
     stopLoading: [
       ServerAction.SEND_MAIL_SUCCESS,

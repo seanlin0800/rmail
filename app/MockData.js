@@ -38,7 +38,7 @@ module.exports = {
             isRead: false,
             isStarred: false,
             date: (new Date()).toISOString()
-          },
+          }
         ]
       },
       {
@@ -62,7 +62,7 @@ module.exports = {
         name: 'sent',
         emails: [
         ]
-      },
+      }
     ]));
   }
 
