@@ -10,11 +10,16 @@
     "test": "jest"
   },
   "jest": {
+    "scriptPreprocessor": "../preprocessor.js",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
     "unmockedModulePathPatterns": [
       "react",
       "node_modules/alt",
       "alt.js"
     ],
+    "moduleFileExtensions": ["js", "jsx"],
     "rootDir": "./app"
   },
   "author": "Sean Lin",
@@ -44,6 +49,7 @@
     "html-webpack-plugin": "^1.5.2",
     "jest-cli": "^0.4.17",
     "node-libs-browser": "^0.5.2",
+    "react-tools": "^0.13.3",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
     "webpack": "^1.10.1",
