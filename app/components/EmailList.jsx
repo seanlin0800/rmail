@@ -31,14 +31,13 @@ var EmailList = React.createClass({
 
   _renderContextMenu: function() {
     var menu = null;
-    var mails = this.props.emails;
 
     if (this.state.isMenuActive) {
       menu = (
         <ContextMenu
           boxName={this.props.boxName}
           status={this.state.menuState}
-          mail={mails[this.state.menuState.id]} />
+        />
       );
     }
 
@@ -60,17 +59,20 @@ var EmailList = React.createClass({
           key={id}
           id={id}
           mail={mails[id]}
-          boxName={this.props.boxName} />
+          boxName={this.props.boxName}
+        />
       );
     }.bind(this));
 
     return (
-      <table className="email-list table">
-        <tbody>
-          {mailList}
-        </tbody>
-        {this._renderContextMenu()}
-      </table>
+      <div className="table-responsive">
+        <table className="email-list table">
+          <tbody>
+            {mailList}
+          </tbody>
+          {this._renderContextMenu()}
+        </table>
+      </div>
     );
   }
 

@@ -15,7 +15,7 @@ var StarWidget = React.createClass({
     MailThreadActionCreators.clickStar({
       name: this.props.boxName,
       id: this.props.mail.id,
-      val: this.props.mail.isStarred
+      val: !this.props.mail.isStarred
     });
   },
 

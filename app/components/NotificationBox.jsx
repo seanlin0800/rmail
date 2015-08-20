@@ -16,7 +16,7 @@ var NotificationBox = React.createClass({
     var notification = {
       message: NotificationStore.getMessage(),
       position: 'tc',
-      level: 'success',
+      level: NotificationStore.getLevel(),
       action: NotificationStore.getAction()
     };
     this.refs.notificationSystem.addNotification(notification);

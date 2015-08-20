@@ -1,7 +1,9 @@
 var React = require('react');
 
-var MailThreadActionCreators = require('../actions/MailThreadActionCreators');
 var ContextMenuActionCreators = require('../actions/ContextMenuActionCreators');
+var EmailStore = require('../stores/EmailStore');
+var CheckedEmailStore = require('../stores/CheckedEmailStore');
+var ActionApi = require('../utils/MailActionUtils');
 
 var makeHandler = function(func) {
   return function(e) {
@@ -16,22 +18,37 @@ var ContextMenu = React.createClass({
 
   propTypes: {
     boxName: React.PropTypes.string,
-    status: React.PropTypes.object,
-    mail: React.PropTypes.object
+    status: React.PropTypes.object
   },
 
-  _markThread: function() {
-    MailThreadActionCreators.markThread(
-      this.props.boxName,
-      this.props.status.id,
-      !this.props.mail.isRead
+  _findReadCheckedMails: function() {
+    var checkedMails = CheckedEmailStore.getCheckedMails(this.props.boxName);
+    var mail;
+    var i;
+    var len = checkedMails.length;
+
+    for (i = 0; i < len; i++) {
+      mail = EmailStore.get(this.props.boxName, checkedMails[i]);
+      if (mail.isRead) {
+        return true;
+      }
+    }
+
+    return false;
+  },
+
+  _renderMenuItem: function() {
+    var isRead = this._findReadCheckedMails();
+    var handler = makeHandler(
+      ActionApi.markThread.bind(null, this.props.boxName, !isRead)
     );
-  },
 
-  _delete: function() {
-    MailThreadActionCreators.delete(
-      this.props.boxName,
-      this.props.status.id
+    return (
+      <li>
+        <a href="#" onClick={handler}>
+          Mark as {isRead ? 'unread' : 'read'}
+        </a>
+      </li>
     );
   },
 
@@ -40,17 +57,16 @@ var ContextMenu = React.createClass({
       left: this.props.status.xPos,
       top: this.props.status.yPos
     };
+    var handler = makeHandler(
+      ActionApi.delete.bind(null, this.props.boxName)
+    );
 
     return (
       <div className="context-menu open" style={styles}>
         <ul className="dropdown-menu">
+          {this._renderMenuItem()}
           <li>
-            <a href="#" onClick={makeHandler(this._markThread)}>
-              Mark as {this.props.mail.isRead ? 'unread' : 'read'}
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={makeHandler(this._delete)}>
+            <a href="#" onClick={handler}>
               <span className="glyphicon glyphicon-trash" />&nbsp;Delete
             </a>
           </li>

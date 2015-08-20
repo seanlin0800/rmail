@@ -4,7 +4,9 @@ var classNames = require('classnames');
 
 var MailUtils = require('../utils/MailUtils');
 var ContextMenuActionCreators = require('../actions/ContextMenuActionCreators');
+var MailThreadActionCreators = require('../actions/MailThreadActionCreators');
 var StarWidget = require('./StarWidget');
+var CheckBox = require('./CheckBox');
 
 var EmailListItem = React.createClass({
 
@@ -28,6 +30,11 @@ var EmailListItem = React.createClass({
     ContextMenuActionCreators.showMenu({
       xPos: e.clientX,
       yPos: e.clientY,
+      name: this.props.boxName,
+      id: this.props.id
+    });
+    MailThreadActionCreators.check({
+      name: this.props.boxName,
       id: this.props.id
     });
   },
@@ -49,6 +56,9 @@ var EmailListItem = React.createClass({
       <tr className={trClasses} onClick={this._clickThread}
           onContextMenu={this._showContextMenu}>
         <td className="bg" />
+        <td className="widget">
+          <CheckBox mail={this.props.mail} boxName={this.props.boxName} />
+        </td>
         <td className="widget" title={starTitle}>
           <StarWidget mail={this.props.mail} boxName={this.props.boxName} />
         </td>
@@ -57,7 +67,7 @@ var EmailListItem = React.createClass({
             {this.props.mail.from}
           </span>
         </td>
-        <td>
+        <td className="subject">
           <span className={textClasses}>
             {this.props.mail.subject}
           </span>

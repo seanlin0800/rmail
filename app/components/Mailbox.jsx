@@ -5,6 +5,7 @@ var DocumentTitle = require('react-document-title');
 
 var EmailStore = require('../stores/EmailStore');
 var MailUtils = require('../utils/MailUtils');
+var MailboxToolbar = require('./MailboxToolbar');
 var EmailList = require('./EmailList');
 
 var Mailbox = React.createClass({
@@ -38,9 +39,13 @@ var Mailbox = React.createClass({
     return (
       <DocumentTitle title={MailUtils.formatBoxName(boxName)}>
         <div>
-          <EmailList
+          <MailboxToolbar
             emails={this.state.emails}
             boxName={this.getParams().name} />
+          <EmailList
+            emails={this.state.emails}
+            boxName={this.getParams().name}
+          />
         </div>
       </DocumentTitle>
     );

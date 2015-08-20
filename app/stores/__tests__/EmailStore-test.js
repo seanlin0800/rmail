@@ -7,6 +7,7 @@ describe('EmailStore', function() {
   var ServerActionCreators;
 
   beforeEach(function() {
+    jest.mock('../../utils/APIUtils');
     EmailStore = require('../EmailStore');
     ServerActionCreators = require('../../actions/ServerActionCreators');
   });
@@ -39,7 +40,6 @@ describe('EmailStore', function() {
         }
       ]);
       MailThreadActionCreators = require('../../actions/MailThreadActionCreators');
-      jest.mock('../../utils/APIUtils');
     });
 
     it('should initialize dataset on receiveAll', function() {
@@ -54,14 +54,21 @@ describe('EmailStore', function() {
     it('should mark mail thread read on markThread', function() {
       var mail;
 
-      MailThreadActionCreators.markThread('sent', 1, true);
+      MailThreadActionCreators.markThread({
+        name: 'sent',
+        id: 1,
+        val: true
+      });
       mail = EmailStore.get('sent', 1);
 
       expect(mail.isRead).toBe(true);
     });
 
     it('should delete an mail on delete', function() {
-      MailThreadActionCreators.delete('sent', 1);
+      MailThreadActionCreators.delete({
+        name: 'sent',
+        id: 1
+      });
       expect(EmailStore.getAll().sent.emails).toEqual({});
     });
 
@@ -71,7 +78,7 @@ describe('EmailStore', function() {
       MailThreadActionCreators.clickStar({
         name: 'sent',
         id: 1,
-        val: false
+        val: true
       });
       mail = EmailStore.get('sent', 1);
 

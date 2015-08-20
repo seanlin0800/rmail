@@ -1,6 +1,7 @@
 var alt = require('../alt');
 var assign = require('object-assign');
 
+var CheckedEmailStore = require('./CheckedEmailStore');
 var ContextMenuActionCreators = require('../actions/ContextMenuActionCreators');
 
 function ContextMenuStore() {
@@ -27,6 +28,7 @@ function ContextMenuStore() {
 }
 
 ContextMenuStore.prototype.onShowMenu = function(obj) {
+  this.waitFor([CheckedEmailStore.dispatchToken]);
   this.isActive = true;
   assign(this.menuState, obj);
 };
