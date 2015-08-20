@@ -35,17 +35,7 @@ var ActionButton = React.createClass({
 
   propTypes: {
     boxName: React.PropTypes.string,
-    initMails: React.PropTypes.array
-  },
-
-  getInitialState: function() {
-    return {checkedMails: this.props.initMails};
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.setState({
-      checkedMails: nextProps.initMails
-    });
+    checkedMails: React.PropTypes.array
   },
 
   _updateMenuMap: function(menuMap, mail) {
@@ -77,7 +67,7 @@ var ActionButton = React.createClass({
   _getMenuMap: function() {
     var mail;
     var i;
-    var len = this.state.checkedMails.length;
+    var len = this.props.checkedMails.length;
     var modified;
     var menuMap = {
       read: false,
@@ -87,7 +77,7 @@ var ActionButton = React.createClass({
     };
 
     for (i = 0; i < len; i++) {
-      mail = EmailStore.get(this.props.boxName, this.state.checkedMails[i]);
+      mail = EmailStore.get(this.props.boxName, this.props.checkedMails[i]);
       modified = this._updateMenuMap(menuMap, mail);
 
       if (!modified) {
@@ -105,7 +95,7 @@ var ActionButton = React.createClass({
     });
   },
 
-  _renderMenuItems: function() {
+  _getMenuItems: function() {
     var menuMap = this._getMenuMap();
     var flow = craeteWorkFlow(this.props.boxName);
     var menuItems = [];
@@ -129,19 +119,21 @@ var ActionButton = React.createClass({
     return menuItems;
   },
 
-  render: function() {
-    if (this.state.checkedMails.length > 0) {
-      return (
-        <SplitButton title="More">
-          {this._renderMenuItems()}
-        </SplitButton>
-      );
+  _renderMenuItems: function() {
+    if (this.props.checkedMails.length > 0) {
+      return this._getMenuItems();
     }
+    return [
+      <MenuItem key={0} onClick={this._markAll}>Mark all as read</MenuItem>,
+      <MenuItem key={1} divider />,
+      <li key={2} className="menu-item">Select messages to see more actions</li>
+    ];
+  },
+
+  render: function() {
     return (
       <SplitButton title="More">
-        <MenuItem onClick={this._markAll}>Mark all as read</MenuItem>
-        <MenuItem divider />
-        <li className="menu-item">Select messages to see more actions</li>
+        {this._renderMenuItems()}
       </SplitButton>
     );
   }
