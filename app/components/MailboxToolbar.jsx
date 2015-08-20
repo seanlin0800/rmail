@@ -127,7 +127,7 @@ var MailboxToolbar = React.createClass({
         {this._renderButton()}
         <ActionButton
           boxName={this.props.boxName}
-          initMails={this.state.checkedMails}
+          checkedMails={this.state.checkedMails}
         />
       </div>
     );
