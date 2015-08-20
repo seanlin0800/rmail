@@ -39,7 +39,8 @@ var NewMsgForm = React.createClass({
             type="text"
             className="form-control"
             id="recipient"
-            ref="recipient" />
+            ref="recipient"
+          />
         </div>
         <div className="form-group">
           <label htmlFor="subject" className="control-label">Subject:</label>
@@ -48,7 +49,8 @@ var NewMsgForm = React.createClass({
             className="form-control"
             id="subject"
             ref="subject"
-            onBlur={this._update} />
+            onBlur={this._update}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="message" className="control-label">Message:</label>
@@ -56,7 +58,8 @@ var NewMsgForm = React.createClass({
             className="form-control"
             id="message"
             rows="5"
-            ref="message" />
+            ref="message"
+          />
         </div>
       </form>
     );
