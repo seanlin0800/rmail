@@ -19,7 +19,7 @@ var Header = React.createClass({
   render: function() {
     return (
       <Navbar brand={<a href="#">{Site.TITLE}</a>} toggleNavKey={0} fixedTop={true}>
-        <Nav right eventKey={1}>
+        <Nav right eventKey={0}>
           <DropdownButton title={MailUtils.getUserName()}>
             <MenuItem onClick={this._handleLogOut}>Sign out</MenuItem>
           </DropdownButton>
