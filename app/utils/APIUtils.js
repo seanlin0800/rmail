@@ -8,6 +8,11 @@ var assign = require('object-assign');
 var ServerActionCreators = require('../actions/ServerActionCreators');
 var router = require('../router');
 
+// simulate success callback
+function async(fn) {
+  setTimeout(fn, 500);
+}
+
 //
 // Simulate database operations
 //
@@ -100,6 +105,33 @@ module.exports = {
     saveDataToDB(data);
   },
 
+  markAll: function(payload) {
+    var data = getDataFromDB();
+    var box = getBoxByName(data, payload.name);
+    var i;
+    var len = box.emails.length;
+    var count = 0;
+
+    for (i = 0; i < len; i++) {
+      if (box.emails[i].isRead === payload.val) {
+        continue;
+      }
+      box.emails[i].isRead = payload.val;
+      count++;
+    }
+
+    if (count > 0) {
+      saveDataToDB(data);
+      async(function() {
+        ServerActionCreators.markAllSuccess(count);
+      });
+    } else {
+      async(function() {
+        ServerActionCreators.markAllCanceled();
+      });
+    }
+  },
+
   deleteEmail: function(name, id) {
     var data = getDataFromDB();
     var box = getBoxByName(data, name);
@@ -117,52 +149,53 @@ module.exports = {
 
   auth: function(obj) {
     ServerActionCreators.auth();
-    // valid user
-    if (obj && isValidToken(obj)) {
-      setTimeout(function() {
-        ServerActionCreators.authSuccess(obj);
-      }, 500);
+    // invalid user
+    if (!obj || !isValidToken(obj)) {
+      async(function() {
+        ServerActionCreators.authError(obj);
+      });
       return;
     }
 
-    // invalid user
-    setTimeout(function() {
-      ServerActionCreators.authError(obj);
-    }, 500);
+    // valid user
+    async(function() {
+      ServerActionCreators.authSuccess(obj);
+    });
   },
 
   sendMail: function(obj) {
     obj.id = insertNewMail(assign({}, obj));
 
-    // simulate success callback
-    setTimeout(function() {
+    async(function() {
       ServerActionCreators.sendMailSuccess(obj);
-    }, 500);
+    });
   },
 
   login: function(obj) {
     var token;
-    if (obj.email === 'seanlin0800@rmail.com' &&
-        obj.password === 'pass') {
-      token = createToken(obj.email);
-      setTimeout(function() {
-        ServerActionCreators.loginSuccess({
-          name: 'seanlin0800@rmail.com',
-          token: token
-        });
-      }, 500);
-    } else {
-      setTimeout(function() {
+
+    if (obj.email !== 'seanlin0800@rmail.com' ||
+        obj.password !== 'pass') {
+      async(function() {
         ServerActionCreators.loginError();
-      }, 500);
+      });
+      return;
     }
+
+    token = createToken(obj.email);
+    async(function() {
+      ServerActionCreators.loginSuccess({
+        name: 'seanlin0800@rmail.com',
+        token: token
+      });
+    });
   },
 
   logout: function(userName) {
     deleteToken(userName);
-    setTimeout(function() {
+    async(function() {
       router.transitionTo('login');
-    }, 500);
+    });
   }
 
 };

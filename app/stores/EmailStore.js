@@ -43,13 +43,24 @@ EmailStore.prototype.onMarkThread = function(obj) {
   this._markThread(obj);
 };
 
+EmailStore.prototype.onMarkAll = function(obj) {
+  var mails = this.mailData[obj.name].emails;
+  var id;
+
+  for (id in mails) {
+    if ({}.hasOwnProperty.call(mails, id)) {
+      mails[id].isRead = obj.val;
+    }
+  }
+};
+
 EmailStore.prototype.onDelete = function(obj) {
   delete this.mailData[obj.name].emails[obj.id];
 };
 
 EmailStore.prototype.onClickStar = function(obj) {
   var mail = this._get(this.mailData, obj.name, obj.id);
-  mail.isStarred = !obj.val;
+  mail.isStarred = obj.val;
 };
 
 EmailStore.prototype.onSendMailSuccess = function(obj) {

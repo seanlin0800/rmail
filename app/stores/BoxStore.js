@@ -46,6 +46,10 @@ BoxStore.prototype.onMarkThread = function(obj) {
   this._updateCount(obj.name);
 };
 
+BoxStore.prototype.onMarkAll = function(obj) {
+  this._updateCount(obj.name);
+};
+
 BoxStore.prototype.onDelete = function(obj) {
   this._updateCount(obj.name);
 };

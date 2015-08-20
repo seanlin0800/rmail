@@ -47,11 +47,11 @@ var Email = React.createClass({
     if (!this.state.mail || this.state.mail.isRead) {
       return;
     }
-    MailThreadActionCreators.markThread(
-      this.getParams().name,
-      this.getParams().id,
-      true
-    );
+    MailThreadActionCreators.markThread({
+      name: this.getParams().name,
+      id: this.getParams().id,
+      val: true
+    });
   },
 
   _onChange: function() {
@@ -80,7 +80,8 @@ var Email = React.createClass({
               <div className="col-md-2">
                 <StarWidget
                   mail={this.state.mail}
-                  boxName={this.getParams().name} />
+                  boxName={this.getParams().name}
+                />
                 {MailUtils.formatDate(mail.date)}
               </div>
             </div>
@@ -88,7 +89,8 @@ var Email = React.createClass({
           </div>
           <div
             className="body"
-            dangerouslySetInnerHTML={{__html: mail.body}} />
+            dangerouslySetInnerHTML={{__html: mail.body}}
+          />
         </div>
       </DocumentTitle>
     );

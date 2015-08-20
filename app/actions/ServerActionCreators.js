@@ -8,7 +8,9 @@ function ServerActions() {
     'loginError',
     'auth',
     'authSuccess',
-    'authError'
+    'authError',
+    'markAllSuccess',
+    'markAllCanceled'
   );
 }
 

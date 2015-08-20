@@ -10,6 +10,7 @@ describe('BoxStore', function() {
   beforeEach(function() {
     alt = require('../../alt');
     alt.dispatcher.waitFor = jest.genMockFunction();
+    jest.mock('../../utils/APIUtils');
     jest.mock('../EmailStore');
     EmailStore = require('../EmailStore');
     BoxStore = require('../BoxStore');

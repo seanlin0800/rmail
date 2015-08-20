@@ -40,12 +40,49 @@ td.widget {
     width: 20px;
 }
 
+div.checkbox {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background-color: rgba(255,255,255,.05);
+    border: 1px solid #c6c6c6;
+    font-size: 1px;
+    height: 15px;
+    margin: 0 4px 0 1px;
+    outline: 0;
+    vertical-align: text-bottom;
+    width: 15px;
+    display: inline-block;
+}
+
+div.checkbox:hover {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
+    border: 1px solid #b2b2b2;
+    cursor: default;
+}
+
+div.checkbox-content {
+    width: 15px;
+    height: 15px;
+}
+
+div.checkbox-content.checked {
+    background: url("../imgs/checkmark.png") no-repeat -5px -3px;
+}
+
+div.checkbox-content.partial {
+    background: url("../imgs/checkmark-partial.png") no-repeat -4px -4px;
+}
+
 tr.mail-item:hover td.bg {
     background: url("../imgs/grippy_large.png") no-repeat 1px 50%!important;
 }
 
 td.from {
-    width: 20em;
+    width: 15em;
+}
+
+td.subject {
+    width: 38em;
 }
 
 span.unread {
@@ -112,12 +149,15 @@ div.star-lit:hover {
     padding: 15px;
     margin: 0 auto;
 }
+
 .form-signin .form-signin-heading {
     margin-bottom: 10px;
 }
+
 .form-signin .checkbox {
     font-weight: normal;
 }
+
 .form-signin .form-control {
     position: relative;
     height: auto;
@@ -127,16 +167,36 @@ div.star-lit:hover {
     padding: 10px;
     font-size: 16px;
 }
+
 .form-signin .form-control:focus {
     z-index: 2;
 }
+
 .form-signin input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 .form-signin input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+div.toolbar {
+    width: 25%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+li.menu-item {
+    font-style: italic;
+    padding: 3px 20px;
+}
+
+/* Firefox-specific hack */
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
 }
