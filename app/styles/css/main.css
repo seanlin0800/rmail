@@ -32,6 +32,10 @@ tr.mail-item:hover {
     cursor: pointer;
 }
 
+tr.selected {
+    background-color: #fcf8e3;
+}
+
 td.bg {
     width: 1px;
 }
