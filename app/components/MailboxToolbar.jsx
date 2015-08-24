@@ -2,38 +2,17 @@ var React = require('react');
 var SplitButton = require('react-bootstrap').SplitButton;
 var MenuItem = require('react-bootstrap').MenuItem;
 var classNames = require('classnames');
-var ListenerMixin = require('alt/mixins/ListenerMixin');
 
 var ActionButton = require('./ActionButton');
 var MailThreadActionCreators = require('../actions/MailThreadActionCreators');
-var CheckedEmailStore = require('../stores/CheckedEmailStore');
 var ActionApi = require('../utils/MailActionUtils');
 
 var MailboxToolbar = React.createClass({
 
   propTypes: {
     boxName: React.PropTypes.string,
-    emails: React.PropTypes.object
-  },
-
-  mixins: [ListenerMixin],
-
-  getInitialState: function() {
-    return this._getStateFromStores();
-  },
-
-  componentDidMount: function() {
-    this.listenTo(CheckedEmailStore, this._onChange);
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.setState({
-      checkedMails: CheckedEmailStore.getCheckedMails(nextProps.boxName)
-    });
-  },
-
-  _onChange: function() {
-    this.setState(this._getStateFromStores());
+    emails: React.PropTypes.object,
+    checkedMails: React.PropTypes.object
   },
 
   _select: function(attr, attrValue) {
@@ -58,12 +37,9 @@ var MailboxToolbar = React.createClass({
   },
 
   _selectNone: function() {
-    this._createCheckAction(this.state.checkedMails.map(function(id) {
-      return {
-        id: id,
-        isChecked: false
-      };
-    }));
+    MailThreadActionCreators.uncheckAll({
+      name: this.props.boxName
+    });
   },
 
   _createCheckAction: function(mailList) {
@@ -73,9 +49,8 @@ var MailboxToolbar = React.createClass({
     });
   },
 
-  _renderCheckBox: function() {
+  _renderCheckBox: function(checkedNum) {
     var mailNum = Object.keys(this.props.emails).length;
-    var checkedNum = this.state.checkedMails.length;
     var classes = classNames({
       'checkbox-content': true,
       'partial': checkedNum > 0 && checkedNum < mailNum,
@@ -89,10 +64,10 @@ var MailboxToolbar = React.createClass({
     );
   },
 
-  _renderButton: function() {
+  _renderButton: function(checkedNum) {
     var handler;
 
-    if (this.state.checkedMails.length === 0) {
+    if (checkedNum === 0) {
       return null;
     }
 
@@ -104,19 +79,13 @@ var MailboxToolbar = React.createClass({
     );
   },
 
-  _getStateFromStores: function() {
-    return {
-      checkedMails: CheckedEmailStore.getCheckedMails(this.props.boxName)
-    };
-  },
-
   render: function() {
-    var checkedNum = this.state.checkedMails.length;
+    var checkedNum = Object.keys(this.props.checkedMails).length;
     var handler = checkedNum > 0 ? this._selectNone : this._select(null, true);
 
     return (
       <div className="toolbar">
-        <SplitButton onClick={handler} title={this._renderCheckBox()}>
+        <SplitButton onClick={handler} title={this._renderCheckBox(checkedNum)}>
           <MenuItem onClick={this._select(null, true)}>All</MenuItem>
           <MenuItem onClick={this._selectNone}>None</MenuItem>
           <MenuItem onClick={this._select('isRead', true)}>Read</MenuItem>
@@ -124,10 +93,10 @@ var MailboxToolbar = React.createClass({
           <MenuItem onClick={this._select('isStarred', true)}>Starred</MenuItem>
           <MenuItem onClick={this._select('isStarred', false)}>Unstarred</MenuItem>
         </SplitButton>
-        {this._renderButton()}
+        {this._renderButton(checkedNum)}
         <ActionButton
           boxName={this.props.boxName}
-          checkedMails={this.state.checkedMails}
+          checkedNum={checkedNum}
         />
       </div>
     );

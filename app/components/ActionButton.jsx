@@ -35,7 +35,7 @@ var ActionButton = React.createClass({
 
   propTypes: {
     boxName: React.PropTypes.string,
-    checkedMails: React.PropTypes.array
+    checkedNum: React.PropTypes.number
   },
 
   _markAll: function() {
@@ -70,7 +70,7 @@ var ActionButton = React.createClass({
   },
 
   _renderMenuItems: function() {
-    if (this.props.checkedMails.length > 0) {
+    if (this.props.checkedNum > 0) {
       return this._getMenuItems();
     }
     return [

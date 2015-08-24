@@ -1,29 +1,14 @@
 var React = require('react');
 var classNames = require('classnames');
-var ListenerMixin = require('alt/mixins/ListenerMixin');
 
-var CheckedEmailStore = require('../stores/CheckedEmailStore');
 var MailThreadActionCreators = require('../actions/MailThreadActionCreators');
 
 var CheckBox = React.createClass({
 
   propTypes: {
     boxName: React.PropTypes.string,
-    mail: React.PropTypes.object
-  },
-
-  mixins: [ListenerMixin],
-
-  getInitialState: function() {
-    return this._getStateFromStores(this.props);
-  },
-
-  componentDidMount: function() {
-    this.listenTo(CheckedEmailStore, this._onChange);
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.setState(this._getStateFromStores(nextProps));
+    mail: React.PropTypes.object,
+    isChecked: React.PropTypes.bool
   },
 
   _onChange: function() {
@@ -36,24 +21,15 @@ var CheckBox = React.createClass({
       name: this.props.boxName,
       mailList: [{
         id: this.props.mail.id,
-        isChecked: !this.state.isChecked
+        isChecked: !this.props.isChecked
       }]
     });
-  },
-
-  _getStateFromStores: function(props) {
-    return {
-      isChecked: CheckedEmailStore.isChecked(
-        props.boxName,
-        props.mail.id
-      )
-    };
   },
 
   render: function() {
     var classes = classNames({
       'checkbox-content': true,
-      'checked': this.state.isChecked
+      'checked': this.props.isChecked
     });
 
     return (
