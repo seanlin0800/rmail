@@ -1,7 +1,6 @@
 var React = require('react');
 
 var ContextMenuActionCreators = require('../actions/ContextMenuActionCreators');
-var EmailStore = require('../stores/EmailStore');
 var CheckedEmailStore = require('../stores/CheckedEmailStore');
 var ActionApi = require('../utils/MailActionUtils');
 
@@ -21,26 +20,11 @@ var ContextMenu = React.createClass({
     status: React.PropTypes.object
   },
 
-  _findReadCheckedMails: function() {
-    var checkedMails = CheckedEmailStore.getCheckedMails(this.props.boxName);
-    var mail;
-    var i;
-    var len = checkedMails.length;
-
-    for (i = 0; i < len; i++) {
-      mail = EmailStore.get(this.props.boxName, checkedMails[i]);
-      if (mail.isRead) {
-        return true;
-      }
-    }
-
-    return false;
-  },
-
   _renderMenuItem: function() {
-    var isRead = this._findReadCheckedMails();
+    var boxName = this.props.boxName;
+    var isRead = CheckedEmailStore.getCountMap(boxName).read > 0;
     var handler = makeHandler(
-      ActionApi.markThread.bind(null, this.props.boxName, !isRead)
+      ActionApi.markThread.bind(null, boxName, !isRead)
     );
 
     return (
