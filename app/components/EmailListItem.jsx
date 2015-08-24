@@ -44,7 +44,8 @@ var EmailListItem = React.createClass({
     var isSelected = this.props.id in this.props.checkedMails;
     var trClasses = classNames({
       'mail-item': true,
-      'active': this.props.mail.isRead
+      'selected': isSelected,
+      'active': !isSelected && this.props.mail.isRead
     });
 
     var textClasses = classNames({
