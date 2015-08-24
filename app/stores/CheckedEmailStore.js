@@ -2,6 +2,7 @@ var alt = require('../alt');
 
 var MailThreadActionCreators = require('../actions/MailThreadActionCreators');
 var ContextMenuActionCreators = require('../actions/ContextMenuActionCreators');
+var EmailStore = require('./EmailStore');
 
 function CheckedEmailStore() {
   this.bindActions(MailThreadActionCreators);
@@ -21,6 +22,30 @@ function CheckedEmailStore() {
 
     getCheckedMails: function(boxName) {
       return Object.keys(this.getState().checkedMails[boxName]);
+    },
+
+    getCountMap: function(boxName) {
+      var mails = this.getState().checkedMails[boxName];
+      var ids = Object.keys(mails);
+      var readCount = 0;
+      var starredCount = 0;
+
+      ids.forEach(function(id) {
+        var mail = EmailStore.get(boxName, id);
+        if (mail.isRead) {
+          readCount++;
+        }
+        if (mail.isStarred) {
+          starredCount++;
+        }
+      });
+
+      return {
+        read: readCount,
+        unread: ids.length - readCount,
+        starred: starredCount,
+        unstarred: ids.length - starredCount
+      };
     }
 
   });
