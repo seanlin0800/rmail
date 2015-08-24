@@ -13,7 +13,8 @@ var EmailListItem = React.createClass({
   propTypes: {
     mail: React.PropTypes.object,
     id: React.PropTypes.string,
-    boxName: React.PropTypes.string
+    boxName: React.PropTypes.string,
+    checkedMails: React.PropTypes.object
   },
 
   mixins: [Router.Navigation],
@@ -40,6 +41,7 @@ var EmailListItem = React.createClass({
   },
 
   render: function() {
+    var isSelected = this.props.id in this.props.checkedMails;
     var trClasses = classNames({
       'mail-item': true,
       'active': this.props.mail.isRead
@@ -57,7 +59,11 @@ var EmailListItem = React.createClass({
           onContextMenu={this._showContextMenu}>
         <td className="bg" />
         <td className="widget">
-          <CheckBox mail={this.props.mail} boxName={this.props.boxName} />
+          <CheckBox
+            mail={this.props.mail}
+            boxName={this.props.boxName}
+            isChecked={isSelected}
+          />
         </td>
         <td className="widget" title={starTitle}>
           <StarWidget mail={this.props.mail} boxName={this.props.boxName} />

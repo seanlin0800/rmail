@@ -16,12 +16,8 @@ function CheckedEmailStore() {
 
   this.exportPublicMethods({
 
-    isChecked: function(boxName, id) {
-      return id in this.getState().checkedMails[boxName];
-    },
-
     getCheckedMails: function(boxName) {
-      return Object.keys(this.getState().checkedMails[boxName]);
+      return this.getState().checkedMails[boxName];
     },
 
     getCountMap: function(boxName) {
@@ -70,6 +66,10 @@ CheckedEmailStore.prototype.onAddCheck = function(obj) {
       delete box[mail.id];
     }
   }
+};
+
+CheckedEmailStore.prototype.onUncheckAll = function(obj) {
+  this.checkedMails[obj.name] = {};
 };
 
 CheckedEmailStore.prototype.onShowMenu = function(obj) {

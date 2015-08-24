@@ -9,20 +9,21 @@ var actionMap = {
 
 var handleThread = function(boxName, attr, value) {
   var mail;
-  var i;
+  var id;
   var checkedMails = CheckedEmailStore.getCheckedMails(boxName);
-  var len = checkedMails.length;
 
-  for (i = 0; i < len; i++) {
-    mail = EmailStore.get(boxName, checkedMails[i]);
-    if (mail[attr] === value) {
-      continue;
+  for (id in checkedMails) {
+    if ({}.hasOwnProperty.call(checkedMails, id)) {
+      mail = EmailStore.get(boxName, id);
+      if (mail[attr] === value) {
+        continue;
+      }
+      MailThreadActionCreators[actionMap[attr]]({
+        name: boxName,
+        id: id,
+        val: value
+      });
     }
-    MailThreadActionCreators[actionMap[attr]]({
-      name: boxName,
-      id: checkedMails[i],
-      val: value
-    });
   }
 };
 
@@ -36,13 +37,14 @@ module.exports.clickStar = function(boxName, value) {
 
 module.exports.delete = function(boxName) {
   var checkedMails = CheckedEmailStore.getCheckedMails(boxName);
-  var i;
-  var len = checkedMails.length;
+  var id;
 
-  for (i = 0; i < len; i++) {
-    MailThreadActionCreators.delete({
-      name: boxName,
-      id: checkedMails[i]
-    });
+  for (id in checkedMails) {
+    if ({}.hasOwnProperty.call(checkedMails, id)) {
+      MailThreadActionCreators.delete({
+        name: boxName,
+        id: id
+      });
+    }
   }
 };

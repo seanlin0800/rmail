@@ -3,6 +3,7 @@ var Router = require('react-router');
 var ListenerMixin = require('alt/mixins/ListenerMixin');
 var DocumentTitle = require('react-document-title');
 
+var CheckedEmailStore = require('../stores/CheckedEmailStore');
 var EmailStore = require('../stores/EmailStore');
 var MailUtils = require('../utils/MailUtils');
 var MailboxToolbar = require('./MailboxToolbar');
@@ -17,7 +18,7 @@ var Mailbox = React.createClass({
   },
 
   componentDidMount: function() {
-    this.listenTo(EmailStore, this._onChange);
+    this.listenToMany([EmailStore, CheckedEmailStore], this._onChange);
   },
 
   componentWillReceiveProps: function(nextProps) {
@@ -25,8 +26,10 @@ var Mailbox = React.createClass({
   },
 
   _getStateFromStores: function(boxName) {
-    var box = EmailStore.getBox(boxName);
-    return {emails: box.emails};
+    return {
+      emails: EmailStore.getBox(boxName).emails,
+      checkedMails: CheckedEmailStore.getCheckedMails(boxName)
+    };
   },
 
   _onChange: function() {
@@ -41,10 +44,13 @@ var Mailbox = React.createClass({
         <div>
           <MailboxToolbar
             emails={this.state.emails}
-            boxName={this.getParams().name} />
+            boxName={this.getParams().name}
+            checkedMails={this.state.checkedMails}
+          />
           <EmailList
             emails={this.state.emails}
             boxName={this.getParams().name}
+            checkedMails={this.state.checkedMails}
           />
         </div>
       </DocumentTitle>

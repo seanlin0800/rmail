@@ -9,7 +9,8 @@ var EmailList = React.createClass({
 
   propTypes: {
     boxName: React.PropTypes.string,
-    emails: React.PropTypes.object
+    emails: React.PropTypes.object,
+    checkedMails: React.PropTypes.object
   },
 
   mixins: [ListenerMixin],
@@ -60,6 +61,7 @@ var EmailList = React.createClass({
           id={id}
           mail={mails[id]}
           boxName={this.props.boxName}
+          checkedMails={this.props.checkedMails}
         />
       );
     }.bind(this));

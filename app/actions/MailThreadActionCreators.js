@@ -34,6 +34,10 @@ function MailThredActions() {
   this.check = function(payload) {
     this.dispatch(payload);
   };
+
+  this.uncheckAll = function(payload) {
+    this.dispatch(payload);
+  };
 }
 
 module.exports = alt.createActions(MailThredActions);
