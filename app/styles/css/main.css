@@ -101,6 +101,7 @@ span.read {
     position: absolute;
     right: 10px;
     bottom: 0px;
+    z-index: 100;
 }
 
 .box {
