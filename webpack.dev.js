@@ -10,7 +10,7 @@ var libs = [
   'react/lib;react/lib',
   'react-router;react-router/umd/ReactRouter.min.js',
   'react-bootstrap;react-bootstrap/dist/react-bootstrap.min.js',
-  'react;react/dist/react.min.js',
+  'react;react/dist/react.js',
   'alt/mixins;alt/mixins',
   'alt/utils;alt/utils',
   'alt;alt/dist/alt.min.js',
